@@ -1,0 +1,83 @@
+$d: 20rem;
+$c: #ecf081 #b3cc57;
+
+* {
+	margin: 0;
+	font: inherit
+}
+
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	background: #ffbe40;
+	font: 1em/ 1.5 trebuchet ms, verdana, arial, sans-serif
+}
+
+.wrap {
+	display: flex;
+	flex-wrap: wrap-reverse;
+	justify-content: center;
+	--d: #{$d};
+	width: var(--d);
+	
+	@media (max-width: $d) { --d: 95vw }
+	
+	@media (max-width: 265px) { font-size: .75em }
+}
+
+[type='radio'] {
+	position: absolute;
+	left: -100vw;
+	
+	+ label {
+		margin: 3em .5em .5em;
+		padding: .25em .5em;
+		border-radius: 5px;
+		box-shadow: 1px 1px nth($c, 2);
+		background: nth($c, 1);
+		font-size: 1.25em;
+		text-shadow: 1px 1px #fff;
+		cursor: pointer;
+		transition: .5s;
+		
+		@media (max-width: 195px) { margin-top: .25em }
+	}
+	
+	&:checked + label {
+		box-shadow: inset -1px -1px nth($c, 1);
+		background: nth($c, 2);
+		color: #fff;
+		text-shadow: 1px 1px #000
+	}
+}
+
+.pie {
+	position: relative;
+	padding: 1.25em 50%;
+	width: 0;
+	border-radius: 5px;
+	--slist: #ab3e5b calc(var(--p)*1%), #ef746f 0;
+	background: linear-gradient(90deg, var(--slist));
+	transition: --p .5s;
+	
+	&:after {
+		position: absolute;
+		transform: translate(-50%, -50%) var(--pos, #{unquote(' ')});
+		color: #fff;
+		font-size: 2em;
+		counter-reset: p var(--p);
+		content: counter(p) '%'
+	}
+	
+	@supports (background: conic-gradient(red, tan)) {
+		padding: 50%;
+		border-radius: 50%;
+		--a: calc(.5*var(--p)/100*1turn - 90deg);
+		--pos: rotate(var(--a)) translate(calc(.25*var(--d))) rotate(calc(-1*var(--a)));
+		background: conic-gradient(var(--slist));
+		
+		@media (max-width: 160px) { --pos: #{unquote(' ')} }
+	}
+}

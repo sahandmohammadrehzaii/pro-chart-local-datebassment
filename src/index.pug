@@ -1,0 +1,16 @@
+- var data = { 2018: 29, 2017: 26, 2016: 20 };
+- var val, darr = [];
+
+style
+	- for(var p in data) {
+		| #o#{p}:checked ~ .pie { --p: #{data[p]} }
+	- }
+.wrap
+	- for(var p in data) {
+		- if(!val) val = data[p];
+		input(type='radio' name='o' id=`o${p}` checked=val === data[p])
+		label(for=`o${p}`) #{p}
+		- darr.push(`${data[p]} for ${p}`)
+	- }
+	.pie(aria-label=`Value as pie chart: ${darr.join(', ')}.` 
+			 role='graphics-document group')
